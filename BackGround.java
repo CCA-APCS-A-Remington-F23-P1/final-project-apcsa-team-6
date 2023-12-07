@@ -15,7 +15,7 @@ public class BackGround extends MovingThing{
     speed=s;
     try
     {
-      URL url = getClass().getResource("Background.jpg");
+      URL url = getClass().getResource("background.jpg");
       image = ImageIO.read(url);
     }
     catch(Exception e)
