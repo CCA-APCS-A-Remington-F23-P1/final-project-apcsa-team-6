@@ -5,22 +5,22 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.imageio.ImageIO;
 
-public class Hero extends MovingThing{
+public class BackGround extends MovingThing{
     private int speed;
     private Image image;   
 
-    public Hero(int x, int y, int w, int h, int s)
+    public BackGround(int x, int y, int w, int h, int s)
   {
     super(x, y, w, h);
     speed=s;
     try
     {
-      URL url = getClass().getResource("Dog_knight.png");
+      URL url = getClass().getResource("Background.jpg");
       image = ImageIO.read(url);
     }
     catch(Exception e)
     {
-      System.out.println("Hero failed to load");
+      System.out.println("Background failed to load");
       //feel free to do something here
     }
   }

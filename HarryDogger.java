@@ -20,16 +20,13 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
 
     private Image background;
 
+    private Hero harry;
+    private BackGround bg;
+
+
   public HarryDogger() {
-    try
-    {
-      URL url = getClass().getResource("ship.jpg");
-      background = ImageIO.read(url);
-    }
-    catch(Exception e)
-    {
-      //feel free to do something here
-    }
+    harry = new Hero(350,350,100,100,0);
+    bg = new BackGround(0,0,800,800,0);
     
     this.addKeyListener(this);
     new Thread(this).start();
@@ -51,9 +48,12 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     if (back==null)
       back = (BufferedImage)(createImage(getWidth(),getHeight()));
 
-      System.out.println(keyPressedString);
-      twoDGraph.drawImage(back, null, 0, 0);
+    Graphics graphToBack = back.createGraphics();
+    bg.draw(graphToBack);
+    harry.draw(graphToBack);
+    
 
+    twoDGraph.drawImage(back, null, 0, 0);
   }
 
   public void keyPressed(KeyEvent e)
