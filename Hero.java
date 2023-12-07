@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 public class Hero extends MovingThing{
     private int speed;
     private Image image;   
+    private int health;
 
     public Hero(int x, int y, int w, int h, int s)
   {
@@ -23,6 +24,14 @@ public class Hero extends MovingThing{
       System.out.println("Hero failed to load");
       //feel free to do something here
     }
+  }
+
+  public int getHealth(){
+    return health;
+  }
+
+  public void setHealth(int h){
+    health = h;
   }
 
   public void setSpeed(int s)
