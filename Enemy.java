@@ -1,29 +1,71 @@
 import java.util.ArrayList;
-public class Enemy extends MovingThing implements Collideable<HarryDogger> {
-    private ArrayList<String> letters;
-    private pair position;
-    private int xSpeed, ySpeed;
+import java.io.File;
+import java.net.URL;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.imageio.ImageIO;
 
-    public Enemy(pair position, int s){
-        Super(position.get(0), position.get(1), 100, 100, s);
-        try {
-            URL url = getClass().getResource("Cat_wizard.png");
-            Image = ImageIO.read(url);
-        } catch (Exception e){
-            //nothing
+public class Enemy extends MovingThing {
+    private ArrayList<String> letters;
+    private int xSpeed, ySpeed;
+    private Image image;   
+
+    static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static final String lower = upper.toLowerCase();
+    static final String symbols = upper + lower;
+
+    public Enemy(int x, int y, int w, int h, int xS, int yS, int difficulty){
+        super(x, y, w, h);
+        xSpeed=xS;
+        ySpeed=yS;
+        try
+        {
+        URL url = getClass().getResource("Cat_wizard.png");
+        image = ImageIO.read(url);
         }
-        xSpeed = position.get(0) - Hero.getX();
-        ySpeed = position.get(1) - Hero.getY();
+        catch(Exception e)
+        {
+        System.out.println("Enemy failed to load");
+        //feel free to do something here
+        }
+        
+        letters = new ArrayList<String>();
+
+        int times = (int)(Math.random()*5) + difficulty;
+
+        for(int i=0;i<times;i++){
+            int index = (int)(Math.random()*symbols.length());
+            String letter = symbols.substring(index,index+1);
+            letters.add(letter);
+        }
     }
 
-    public void move(){
+    public String displayLetters(){
+        String output = "";
+        for(String letter:letters){
+            output+=letter;
+        }
+        return output;
+    }
+
+    public void removeLetter(String letter){
+        if(letters.get(0).equals(letter)){
+            letters.remove(0);
+        }
+    }
+
+
+
+    public void move(String direction){
         setX(getX()+xSpeed);
         setY(getY()+ySpeed);
     }
 
-    public void collide(HarryDogger h){
-        if (getX() < h.getX() + h.getWidth() && getX() + getWidth() > h.getX() && getY() < h.getY() + h.getHeight() && getY() + getHeight() > h.getY()){
-            h.setHealth(h.getHealth()-1);
-        }
+    public void draw( Graphics window )
+    {
+        window.drawImage(image,getX(),getY(),getWidth(),getHeight(),null);
+        window.setColor(Color.WHITE);
+        window.drawString(displayLetters(),getX()+getWidth()/2-(5*letters.size()/2),getY()+getHeight()/2);
     }
 }
