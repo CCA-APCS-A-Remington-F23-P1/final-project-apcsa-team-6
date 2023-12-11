@@ -9,11 +9,8 @@ import javax.imageio.ImageIO;
 public class Enemies {
     private ArrayList<Enemy> enemies;
 
-    public Enemies(int size){
+    public Enemies(){
         enemies = new ArrayList<Enemy>();
-        for (i = 0; i <size; i++){
-            enemies.add(new Enemy())
-        }
     }
 
     public void add(Enemy en){
@@ -22,17 +19,35 @@ public class Enemies {
 
     public void move(){
         for (Enemy en : enemies){
-            en.move();
+            en.move("");
+        }
+    }
+    
+    public void draw(Graphics window){
+        for (Enemy en : enemies){
+            en.draw(window);
         }
     }
 
-    public void detectHit(){
-        for (int i=0; i<enemies.size(); i++) {
+    public void damageEnemies(String letter){
+        for (Enemy en : enemies){
+            en.removeLetter(letter);
+        }
+        for(int i=enemies.size()-1;i>=0;i--){
             Enemy en = enemies.get(i);
-            if (en.detectHit()){
+            if(en.displayLetters().equals("")){
                 enemies.remove(i);
-                break;
             }
         }
     }
+
+    // public void detectHit(){
+    //     for (int i=0; i<enemies.size(); i++) {
+    //         Enemy en = enemies.get(i);
+    //         if (en.detectHit()){
+    //             enemies.remove(i);
+    //             break;
+    //         }
+    //     }
+    // }
 }

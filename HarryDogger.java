@@ -23,25 +23,30 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     private Hero harry;
     private BackGround bg;
 
-    private Enemy enemy1;
+    // private Enemy enemy1;
 
-    private ArrayList<Enemy> enemies;
+    private Enemies enemies;
 
     //top left, top middle, top right
     //middle left, middle right
     //bottom left, bottom middle, bottom right
     private int[] xPos = {-90, 350, 780, -90, 780, -90, 350, 780};
     private int[] yPos = {-90, -90, -90, 350, 350, 750, 750, 750};
-    private int[] xS = {1, 0, -1, 1, -1, 1, 0, -1};
-    private int[] yS = {1, 1, 1, 0, 0, -1, -1, -1};
+    private int[] xS = {2, 0, -2, 2, -2, 2, 0, -2};
+    private int[] yS = {2, 2, 2, 0, 0, -2, -2, -2};
 
     private int difficulty = 1;
+    private int difficultyBuffer = 10000;
 
+    private int moveBuffer = 30;
+    private int spawnBuffer = 2000;
+
+    private boolean gameOver = false;
 
   public HarryDogger() {
     harry = new Hero(350,350,100,100,0);
     bg = new BackGround(0,0,800,800,0);
-    enemy1 = new Enemy(100,750,100,100,0,0,1);
+    enemies = new Enemies();
     
     this.addKeyListener(this);
     new Thread(this).start();
@@ -66,7 +71,47 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     Graphics graphToBack = back.createGraphics();
     bg.draw(graphToBack);
     harry.draw(graphToBack);
-    enemy1.draw(graphToBack);
+    enemies.draw(graphToBack);
+    // enemy1.draw(graphToBack);
+
+    if(spawnBuffer == 2000){
+        int[] tracker = new int[8];
+        int amountSpawn = (int)(Math.random()*3) + difficulty;
+        if(amountSpawn > 8){
+            amountSpawn = 8;
+        }
+        for(int i=0;i<amountSpawn;i++){
+            int index = (int)(Math.random()*8);
+            while(tracker[index] == 1){
+                index = (int)(Math.random()*8);
+            }
+            tracker[index] = 1;
+            Enemy en = new Enemy(xPos[index], yPos[index], 100, 100, xS[index], yS[index], difficulty);
+            enemies.add(en);
+        }
+        spawnBuffer = 0;
+    }
+    else{
+        spawnBuffer++;
+    }
+
+    if(moveBuffer == 30){
+        enemies.move();
+        moveBuffer = 0;
+    }
+    else{
+        moveBuffer++;
+    }
+
+    enemies.damageEnemies(keyPressedString);
+
+    if(difficultyBuffer == 10000){
+        difficulty++;
+        difficultyBuffer = 0;
+    }
+    else{
+        difficultyBuffer++;
+    }
     
 
     twoDGraph.drawImage(back, null, 0, 0);
