@@ -38,7 +38,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     private int difficulty = 1;
     private int difficultyBuffer = 10000;
 
-    private int moveBuffer = 30;
+    private int moveBuffer = 10;
     private int spawnBuffer = 2000;
 
     private boolean gameOver = false;
@@ -95,7 +95,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
         spawnBuffer++;
     }
 
-    if(moveBuffer == 30){
+    if(moveBuffer == 10){
         enemies.move();
         moveBuffer = 0;
     }
