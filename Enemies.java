@@ -41,13 +41,13 @@ public class Enemies {
         }
     }
 
-    // public void detectHit(){
-    //     for (int i=0; i<enemies.size(); i++) {
-    //         Enemy en = enemies.get(i);
-    //         if (en.detectHit()){
-    //             enemies.remove(i);
-    //             break;
-    //         }
-    //     }
-    // }
+    public void detectHit(){
+        for (int i=0; i<enemies.size(); i++) {
+            Enemy en = enemies.get(i);
+            if (en.detectHit()){
+                enemies.remove(i);
+                break;
+            }
+        }
+    }
 }

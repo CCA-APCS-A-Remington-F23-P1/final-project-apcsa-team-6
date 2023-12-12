@@ -55,6 +55,13 @@ public class Enemy extends MovingThing {
         }
     }
 
+    public boolean detectHit(){
+        if (((super.getX()>=350) && (super.getX()<=350+100)) && ((super.getY()>=350) && (super.getY()<=350+100))){
+            return true;
+        }
+        return false;
+    }
+
 
 
     public void move(String direction){
