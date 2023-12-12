@@ -27,6 +27,8 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
 
     private Enemies enemies;
 
+    private int score;
+
     //top left, top middle, top right
     //middle left, middle right
     //bottom left, bottom middle, bottom right
@@ -38,7 +40,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     private int difficulty = 1;
     private int difficultyBuffer = 10000;
 
-    private int moveBuffer = 30;
+    private int moveBuffer = 10;
     private int spawnBuffer = 2000;
 
     private boolean gameOver = false;
@@ -47,6 +49,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     harry = new Hero(350,350,100,100,0);
     bg = new BackGround(0,0,800,800,0);
     enemies = new Enemies();
+    score = 0;
     
     this.addKeyListener(this);
     new Thread(this).start();
@@ -95,7 +98,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
         spawnBuffer++;
     }
 
-    if(moveBuffer == 30){
+    if(moveBuffer == 10){
         enemies.move();
         moveBuffer = 0;
     }
@@ -103,7 +106,8 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
         moveBuffer++;
     }
 
-    enemies.damageEnemies(keyPressedString);
+    ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
+    for(int i : deadArr) score += i;
 
     if(difficultyBuffer == 10000){
         difficulty++;
