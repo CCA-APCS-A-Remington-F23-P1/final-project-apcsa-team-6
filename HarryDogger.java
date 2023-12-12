@@ -18,8 +18,6 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     private BufferedImage back;
     private String keyPressedString = "";
 
-    private Image background;
-
     private Hero harry;
     private BackGround bg;
 
@@ -38,10 +36,12 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     private int[] yS = {2, 2, 2, 0, 0, -2, -2, -2};
 
     private int difficulty = 1;
-    private int difficultyBuffer = 10000;
+    private int difficultyBuffer = 0;
 
     private int moveBuffer = 10;
     private int spawnBuffer = 2000;
+
+    private int damageBuffer = 300;
 
     private boolean gameOver = false;
 
@@ -72,9 +72,14 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
       back = (BufferedImage)(createImage(getWidth(),getHeight()));
 
     Graphics graphToBack = back.createGraphics();
+    graphToBack.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
     bg.draw(graphToBack);
     harry.draw(graphToBack);
     enemies.draw(graphToBack);
+    graphToBack.setColor(Color.WHITE);
+    graphToBack.drawString("Score: " + score, 150, 30);
+    graphToBack.drawString("Difficulty: " + difficulty, 150,60);
+    graphToBack.drawString("Health: " + harry.getHealth(), 450,30);
     // enemy1.draw(graphToBack);
 
     if(spawnBuffer == 2000){
@@ -107,9 +112,17 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     }
 
     ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
-    for(int i : deadArr) score += i;
+    for(int i : deadArr) score += 100;
 
-    if(difficultyBuffer == 10000){
+    harry.setHealth(harry.getHealth() - (enemies.detectHit() && damageBuffer == 300 ? 1 : 0));
+    if(damageBuffer == 300){
+        damageBuffer = 0;
+    }
+    else{
+        damageBuffer++;
+    }
+
+    if(difficultyBuffer == 6000){
         difficulty++;
         difficultyBuffer = 0;
     }
@@ -117,6 +130,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
         difficultyBuffer++;
     }
     
+
 
     twoDGraph.drawImage(back, null, 0, 0);
   }

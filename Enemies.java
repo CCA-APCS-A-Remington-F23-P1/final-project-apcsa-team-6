@@ -30,7 +30,6 @@ public class Enemies {
     }
 
     public ArrayList<Integer> damageEnemies(String letter){
-        //returns array of 1 if enemy dies, 0 if lives
         ArrayList<Integer> deadArr = new ArrayList<Integer>();
         for (Enemy en : enemies){
             en.removeLetter(letter);
@@ -41,18 +40,18 @@ public class Enemies {
                 enemies.remove(i);
                 deadArr.add(1);
             }
-            deadArr.add(0);
         }
         return deadArr;
     }
 
-    public void detectHit(){
+    public boolean detectHit(){
         for (int i=0; i<enemies.size(); i++) {
             Enemy en = enemies.get(i);
             if (en.detectHit()){
                 enemies.remove(i);
-                break;
+                return true;
             }
         }
+        return false;
     }
 }

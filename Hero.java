@@ -14,6 +14,7 @@ public class Hero extends MovingThing{
   {
     super(x, y, w, h);
     speed=s;
+    health = 5;
     try
     {
       URL url = getClass().getResource("Dog_knight.png");
