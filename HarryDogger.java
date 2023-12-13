@@ -130,6 +130,16 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
         difficultyBuffer++;
     }
     
+    if(harry.getHealth() == 0){
+      graphToBack.setColor(Color.WHITE);
+      graphToBack.fillRect(0, 0, 800, 800);
+
+      graphToBack.setColor(Color.red);
+
+      graphToBack.drawString("GAME OVER! Score = " + score, 400, 550);
+    }
+    }
+    
 
 
     twoDGraph.drawImage(back, null, 0, 0);
