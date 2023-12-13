@@ -80,6 +80,10 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     graphToBack.drawString("Score: " + score, 150, 30);
     graphToBack.drawString("Difficulty: " + difficulty, 150,60);
     graphToBack.drawString("Health: " + harry.getHealth(), 450,30);
+    graphToBack.setColor(Color.RED);
+    if(!keyPressedString.equals("")){
+      graphToBack.drawString(keyPressedString, 390, 350);
+    }
     // enemy1.draw(graphToBack);
 
     if(spawnBuffer == 2000){
@@ -114,11 +118,13 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
     for(int i : deadArr) score += 100;
 
-    harry.setHealth(harry.getHealth() - (enemies.detectHit() && damageBuffer == 300 ? 1 : 0));
     if(damageBuffer == 300){
-        damageBuffer = 0;
+        boolean yes = enemies.detectHit();
+        harry.setHealth(harry.getHealth() - (yes ? 1 : 0));
+        if(yes) damageBuffer = 0;
     }
     else{
+        enemies.detectHit();
         damageBuffer++;
     }
 
