@@ -54,15 +54,4 @@ public class Enemies {
         }
         return false;
     }
-
-    public boolean clearPerimeter(){
-        for (int i=0; i<enemies.size(); i++) {
-            Enemy en = enemies.get(i);
-            if (en.inPerimeter()){
-                enemies.remove(i);
-                return true;
-            }
-        }
-        return false;
-    }
 }
