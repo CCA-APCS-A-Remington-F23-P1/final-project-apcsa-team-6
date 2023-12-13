@@ -41,8 +41,6 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private int moveBuffer = 10;
   private int spawnBuffer = 2000;
 
-  private int damageBuffer = 300;
-
   private boolean gameOver = false;
 
   public HarryDogger() {
@@ -71,6 +69,20 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
 
     Graphics graphToBack = back.createGraphics();
     graphToBack.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+
+    if (harry.getHealth() == 0) {
+      graphToBack.setColor(Color.BLACK);
+      graphToBack.fillRect(0, 0, 800, 800);
+
+      graphToBack.setColor(Color.red);
+
+      graphToBack.drawString("GAME OVER! Score = " + score, 400, 550);
+
+      twoDGraph.drawImage(back, null, 0, 0);
+      return;
+    }
+
+
     bg.draw(graphToBack);
     harry.draw(graphToBack);
     enemies.draw(graphToBack);
@@ -112,19 +124,9 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     }
 
     ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
-    for (int i : deadArr)
-      score += 100;
+    for (int i : deadArr) score += 100;
 
-    if (damageBuffer == 300) {
-      if (enemies.detectHit()){
-        enemies.clearPerimeter();
-        harry.setHealth(harry.getHealth() - 1);
-        damageBuffer = 0;
-      }
-    } else {
-      enemies.detectHit();
-      damageBuffer++;
-    }
+    harry.setHealth(harry.getHealth() - (enemies.detectHit()?1:0));
 
     if (difficultyBuffer == 6000) {
       difficulty++;
@@ -133,14 +135,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
       difficultyBuffer++;
     }
 
-    if (harry.getHealth() == 0) {
-      graphToBack.setColor(Color.WHITE);
-      graphToBack.fillRect(0, 0, 800, 800);
-
-      graphToBack.setColor(Color.red);
-
-      graphToBack.drawString("GAME OVER! Score = " + score, 400, 550);
-    }
+    
 
     twoDGraph.drawImage(back, null, 0, 0);
   }
