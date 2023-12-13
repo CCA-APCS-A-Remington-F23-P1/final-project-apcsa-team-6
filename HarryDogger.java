@@ -14,62 +14,60 @@ import java.util.ArrayList;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
-public class HarryDogger extends Canvas implements KeyListener, Runnable{
-    private BufferedImage back;
-    private String keyPressedString = "";
+public class HarryDogger extends Canvas implements KeyListener, Runnable {
+  private BufferedImage back;
+  private String keyPressedString = "";
 
-    private Hero harry;
-    private BackGround bg;
+  private Hero harry;
+  private BackGround bg;
 
-    // private Enemy enemy1;
+  // private Enemy enemy1;
 
-    private Enemies enemies;
+  private Enemies enemies;
 
-    private int score;
+  private int score;
 
-    //top left, top middle, top right
-    //middle left, middle right
-    //bottom left, bottom middle, bottom right
-    private int[] xPos = {-90, 350, 780, -90, 780, -90, 350, 780};
-    private int[] yPos = {-90, -90, -90, 350, 350, 750, 750, 750};
-    private int[] xS = {2, 0, -2, 2, -2, 2, 0, -2};
-    private int[] yS = {2, 2, 2, 0, 0, -2, -2, -2};
+  // top left, top middle, top right
+  // middle left, middle right
+  // bottom left, bottom middle, bottom right
+  private int[] xPos = { -90, 350, 780, -90, 780, -90, 350, 780 };
+  private int[] yPos = { -90, -90, -90, 350, 350, 750, 750, 750 };
+  private int[] xS = { 2, 0, -2, 2, -2, 2, 0, -2 };
+  private int[] yS = { 2, 2, 2, 0, 0, -2, -2, -2 };
 
-    private int difficulty = 1;
-    private int difficultyBuffer = 0;
+  private int difficulty = 1;
+  private int difficultyBuffer = 0;
 
-    private int moveBuffer = 10;
-    private int spawnBuffer = 2000;
+  private int moveBuffer = 10;
+  private int spawnBuffer = 2000;
 
-    private int damageBuffer = 300;
+  private int damageBuffer = 300;
 
-    private boolean gameOver = false;
+  private boolean gameOver = false;
 
   public HarryDogger() {
-    harry = new Hero(350,350,100,100,0);
-    bg = new BackGround(0,0,800,800,0);
+    harry = new Hero(350, 350, 100, 100, 0);
+    bg = new BackGround(0, 0, 800, 800, 0);
     enemies = new Enemies();
     score = 0;
-    
+
     this.addKeyListener(this);
     new Thread(this).start();
 
     setVisible(true);
   }
 
-    public void update(Graphics window)
-  {
+  public void update(Graphics window) {
     paint(window);
   }
 
-  public void paint( Graphics window )
-  {
-    Graphics2D twoDGraph = (Graphics2D)window;
+  public void paint(Graphics window) {
+    Graphics2D twoDGraph = (Graphics2D) window;
 
-    //take a snap shop of the current screen and same it as an image
-    //that is the exact same width and height as the current screen
-    if (back==null)
-      back = (BufferedImage)(createImage(getWidth(),getHeight()));
+    // take a snap shop of the current screen and same it as an image
+    // that is the exact same width and height as the current screen
+    if (back == null)
+      back = (BufferedImage) (createImage(getWidth(), getHeight()));
 
     Graphics graphToBack = back.createGraphics();
     graphToBack.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
@@ -78,65 +76,64 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
     enemies.draw(graphToBack);
     graphToBack.setColor(Color.WHITE);
     graphToBack.drawString("Score: " + score, 150, 30);
-    graphToBack.drawString("Difficulty: " + difficulty, 150,60);
-    graphToBack.drawString("Health: " + harry.getHealth(), 450,30);
+    graphToBack.drawString("Difficulty: " + difficulty, 150, 60);
+    graphToBack.drawString("Health: " + harry.getHealth(), 450, 30);
     graphToBack.setColor(Color.RED);
-    if(!keyPressedString.equals("")){
+    if (!keyPressedString.equals("")) {
       graphToBack.drawString(keyPressedString, 390, 350);
     }
     // enemy1.draw(graphToBack);
 
-    if(spawnBuffer == 2000){
-        int[] tracker = new int[8];
-        int amountSpawn = (int)(Math.random()*3) + difficulty;
-        if(amountSpawn > 8){
-            amountSpawn = 8;
+    if (spawnBuffer == 2000) {
+      int[] tracker = new int[8];
+      int amountSpawn = (int) (Math.random() * 3) + difficulty;
+      if (amountSpawn > 8) {
+        amountSpawn = 8;
+      }
+      for (int i = 0; i < amountSpawn; i++) {
+        int index = (int) (Math.random() * 8);
+        while (tracker[index] == 1) {
+          index = (int) (Math.random() * 8);
         }
-        for(int i=0;i<amountSpawn;i++){
-            int index = (int)(Math.random()*8);
-            while(tracker[index] == 1){
-                index = (int)(Math.random()*8);
-            }
-            tracker[index] = 1;
-            Enemy en = new Enemy(xPos[index], yPos[index], 100, 100, xS[index], yS[index], difficulty);
-            enemies.add(en);
-        }
-        spawnBuffer = 0;
-    }
-    else{
-        spawnBuffer++;
+        tracker[index] = 1;
+        Enemy en = new Enemy(xPos[index], yPos[index], 100, 100, xS[index], yS[index], difficulty);
+        enemies.add(en);
+      }
+      spawnBuffer = 0;
+    } else {
+      spawnBuffer++;
     }
 
-    if(moveBuffer == 10){
-        enemies.move();
-        moveBuffer = 0;
-    }
-    else{
-        moveBuffer++;
+    if (moveBuffer == 10) {
+      enemies.move();
+      moveBuffer = 0;
+    } else {
+      moveBuffer++;
     }
 
     ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
-    for(int i : deadArr) score += 100;
+    for (int i : deadArr)
+      score += 100;
 
-    if(damageBuffer == 300){
-        boolean yes = enemies.detectHit();
-        harry.setHealth(harry.getHealth() - (yes ? 1 : 0));
-        if(yes) damageBuffer = 0;
-    }
-    else{
-        enemies.detectHit();
-        damageBuffer++;
+    if (damageBuffer == 300) {
+      if (enemies.detectHit()){
+        enemies.clearPerimeter();
+        harry.setHealth(harry.getHealth() - 1);
+        damageBuffer = 0;
+      }
+    } else {
+      enemies.detectHit();
+      damageBuffer++;
     }
 
-    if(difficultyBuffer == 6000){
-        difficulty++;
-        difficultyBuffer = 0;
+    if (difficultyBuffer == 6000) {
+      difficulty++;
+      difficultyBuffer = 0;
+    } else {
+      difficultyBuffer++;
     }
-    else{
-        difficultyBuffer++;
-    }
-    
-    if(harry.getHealth() == 0){
+
+    if (harry.getHealth() == 0) {
       graphToBack.setColor(Color.WHITE);
       graphToBack.fillRect(0, 0, 800, 800);
 
@@ -144,20 +141,16 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
 
       graphToBack.drawString("GAME OVER! Score = " + score, 400, 550);
     }
-    
-
 
     twoDGraph.drawImage(back, null, 0, 0);
   }
 
-  public void keyPressed(KeyEvent e)
-  {
-    keyPressedString = "" +  e.getKeyChar();
+  public void keyPressed(KeyEvent e) {
+    keyPressedString = "" + e.getKeyChar();
     repaint();
   }
 
-  public void keyReleased(KeyEvent e)
-  {
+  public void keyReleased(KeyEvent e) {
     keyPressedString = "";
     repaint();
   }
