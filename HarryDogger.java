@@ -144,7 +144,6 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable{
 
       graphToBack.drawString("GAME OVER! Score = " + score, 400, 550);
     }
-    }
     
 
 

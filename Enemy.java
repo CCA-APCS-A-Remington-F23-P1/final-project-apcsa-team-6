@@ -65,7 +65,12 @@ public class Enemy extends MovingThing {
         return false;
     }
 
-
+    public boolean inPerimeter(){
+        if (((super.getX()>=200) && (super.getX()<=350+250)) && ((super.getY()>=200) && (super.getY()<=350+250))){
+            return true;
+        }
+        return false;
+    }
 
     public void move(String direction){
         setX(getX()+xSpeed);
