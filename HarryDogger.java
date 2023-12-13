@@ -75,8 +75,10 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
       graphToBack.fillRect(0, 0, 800, 800);
 
       graphToBack.setColor(Color.red);
-
-      graphToBack.drawString("GAME OVER! Score = " + score, 400, 550);
+      graphToBack.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 50));
+      graphToBack.drawString("GAME OVER!", 300, 300);
+      graphToBack.drawString("Score = "+ score, 300, 360);
+      graphToBack.drawString("Diff = "+ difficulty, 300, 420);
 
       twoDGraph.drawImage(back, null, 0, 0);
       return;
@@ -95,6 +97,27 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
       graphToBack.drawString(keyPressedString, 390, 350);
     }
     // enemy1.draw(graphToBack);
+
+    if(difficulty % 3 == 0){
+      if(difficulty == 5){
+      }else{
+      for(int x: xS){
+        if(x>0){
+          x++;
+        }else if(x<0){
+          x--;
+        }
+      }
+      for(int y: yS){
+        if(y>0){
+          y++;
+        }else if(y<0){
+          y--;
+        }
+      }
+      }
+      
+    }
 
     if (spawnBuffer == 2000) {
       int[] tracker = new int[8];
