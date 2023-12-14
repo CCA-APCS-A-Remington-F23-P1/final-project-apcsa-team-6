@@ -21,6 +21,8 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private Hero harry;
   private BackGround bg;
 
+  private Sound sound;
+
   // private Enemy enemy1;
 
   private Enemies enemies;
@@ -48,6 +50,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     bg = new BackGround(0, 0, 800, 800, 0);
     enemies = new Enemies();
     score = 0;
+    sound = new Sound();
 
     this.addKeyListener(this);
     new Thread(this).start();
@@ -61,6 +64,11 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
 
   public void paint(Graphics window) {
     Graphics2D twoDGraph = (Graphics2D) window;
+
+    //bg music
+    sound.setFile(4); //doom
+    //sound.setFile(5); //superhero
+    sound.loop();
 
     // take a snap shop of the current screen and same it as an image
     // that is the exact same width and height as the current screen
@@ -148,8 +156,13 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
 
     ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
     for (int i : deadArr) score += 100;
-
+    
+    int pastHealth = harry.getHealth();
     harry.setHealth(harry.getHealth() - (enemies.detectHit()?1:0));
+    if(pastHealth > harry.getHeath()){
+      sound.setFile(0);
+      sound.play();
+    }
 
     if (difficultyBuffer == 6000) {
       difficulty++;
@@ -166,6 +179,8 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   public void keyPressed(KeyEvent e) {
     keyPressedString = "" + e.getKeyChar();
     repaint();
+    sound.setFile(2);
+    sound.play();
   }
 
   public void keyReleased(KeyEvent e) {
