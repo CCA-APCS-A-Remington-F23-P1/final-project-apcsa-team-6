@@ -9,7 +9,11 @@ import javax.imageio.ImageIO;
 public class Enemy extends MovingThing {
     private ArrayList<String> letters;
     private int xSpeed, ySpeed;
-    private Image image;   
+    private Image image;
+    private int topLeftX = 310;
+    private int topLeftY = 310;
+    private int botRightX = 350+60;
+    private int botRightY = 350+60;
 
     static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static final String lower = upper.toLowerCase();
@@ -59,10 +63,10 @@ public class Enemy extends MovingThing {
     }
 
     public boolean detectHit(){
-        if ((super.getX()<=350+80 && super.getY()<=350+80 && super.getX()>=330 && super.getY()>=330)
-        || (super.getX()+super.getWidth()>=330 && super.getY()>=350+80 && super.getX()+super.getWidth()<=350+80 && super.getY()<=350+80)
-        || (super.getX()+super.getWidth()>=330 && super.getY()+super.getHeight()>=330 && super.getX()+super.getWidth()<=350+80 && super.getY()+super.getHeight()<=350+80)
-        || (super.getX()<=350+80 && super.getY()+super.getHeight()>=330 && super.getX()>=330 && super.getY()+super.getHeight()<=350+80)){
+        if ((super.getX()<=botRightX && super.getY()<=botRightY && super.getX()>=topRightX && super.getY()>=topLeftY)
+        || (super.getX()+super.getWidth()>=topLeftX && super.getY()>=botRightY && super.getX()+super.getWidth()<=botRightX && super.getY()<=botRightY)
+        || (super.getX()+super.getWidth()>=topLeftX && super.getY()+super.getHeight()>=topLeftY && super.getX()+super.getWidth()<=botRightX && super.getY()+super.getHeight()<=botRightY)
+        || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topRightY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
             return true;
         }
         return false;
