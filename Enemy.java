@@ -10,10 +10,10 @@ public class Enemy extends MovingThing {
     private ArrayList<String> letters;
     private int xSpeed, ySpeed;
     private Image image;
-    private int topLeftX = 390;
-    private int topLeftY = 390;
-    private int botRightX = 350+60;
-    private int botRightY = 350+60;
+    private int topLeftX = 350;
+    private int topLeftY = 350;
+    private int botRightX = 350+80;
+    private int botRightY = 350+80;
 
     static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static final String lower = upper.toLowerCase();
