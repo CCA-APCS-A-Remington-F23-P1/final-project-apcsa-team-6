@@ -10,8 +10,8 @@ public class Enemy extends MovingThing {
     private ArrayList<String> letters;
     private int xSpeed, ySpeed;
     private Image image;
-    private int topLeftX = 310;
-    private int topLeftY = 310;
+    private int topLeftX = 390;
+    private int topLeftY = 390;
     private int botRightX = 350+60;
     private int botRightY = 350+60;
 
@@ -63,20 +63,13 @@ public class Enemy extends MovingThing {
     }
 
     public boolean detectHit(){
-        // if ((super.getX()<=botRightX && super.getY()<=botRightY && super.getX()>=topLeftX && super.getY()>=topLeftY)
-        // || (super.getX()+super.getWidth()>=topLeftX && super.getY()>=botRightY && super.getX()+super.getWidth()<=botRightX && super.getY()<=botRightY)
-        // || (super.getX()+super.getWidth()>=topLeftX && super.getY()+super.getHeight()>=topLeftY && super.getX()+super.getWidth()<=botRightX && super.getY()+super.getHeight()<=botRightY)
-        // || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topLeftY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
-        //     return true;
-        // }
-        // return false;
-        double x = super.getX();
-        double y = super.getY();
-        double rightX = x + super.getWidth();
-        double bottomY = y + super.getHeight();
-        boolean withinXBounds = x <= botRightX && rightX >= topLeftX;
-        boolean withinYBOunds = y <= botRightY && bottomY >= topLeftY;
-        return withinXBounds && withinYBOunds;
+        if ((super.getX()<=botRightX && super.getY()<=botRightY && super.getX()>=topLeftX && super.getY()>=topLeftY)
+        || (super.getX()+super.getWidth()>=topLeftX && super.getY()>=botRightY && super.getX()+super.getWidth()<=botRightX && super.getY()<=botRightY)
+        || (super.getX()+super.getWidth()>=topLeftX && super.getY()+super.getHeight()>=topLeftY && super.getX()+super.getWidth()<=botRightX && super.getY()+super.getHeight()<=botRightY)
+        || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topLeftY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
+            return true;
+        }
+        return false;
     }
 
 
