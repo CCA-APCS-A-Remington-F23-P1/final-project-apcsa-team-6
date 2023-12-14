@@ -39,7 +39,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private int difficultyBuffer = 0;
 
   private int moveBuffer = 10;
-  private int spawnBuffer = 2000;
+  private int spawnBuffer = 1200;
 
   private boolean gameOver = false;
 
@@ -68,14 +68,14 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
       back = (BufferedImage) (createImage(getWidth(), getHeight()));
 
     Graphics graphToBack = back.createGraphics();
-    graphToBack.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+    graphToBack.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
 
     if (harry.getHealth() == 0) {
       graphToBack.setColor(Color.BLACK);
       graphToBack.fillRect(0, 0, 800, 800);
 
       graphToBack.setColor(Color.red);
-      graphToBack.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 50));
+      graphToBack.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
       graphToBack.drawString("GAME OVER!", 300, 300);
       graphToBack.drawString("Score = "+ score, 300, 360);
       graphToBack.drawString("Diff = "+ difficulty, 300, 420);
@@ -92,14 +92,14 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     graphToBack.drawString("Score: " + score, 150, 30);
     graphToBack.drawString("Difficulty: " + difficulty, 150, 60);
     graphToBack.drawString("Health: " + harry.getHealth(), 450, 30);
-    graphToBack.setColor(Color.RED);
+    graphToBack.setColor(Color.WHITE);
     if (!keyPressedString.equals("")) {
       graphToBack.drawString(keyPressedString, 390, 350);
     }
     // enemy1.draw(graphToBack);
 
     if(difficulty % 3 == 0){
-      if(difficulty == 5){
+      if(difficulty == 4){
       }else{
       for(int x: xS){
         if(x>0){
@@ -119,11 +119,11 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
       
     }
 
-    if (spawnBuffer == 2000) {
+    if (spawnBuffer == 1200) {
       int[] tracker = new int[8];
       int amountSpawn = (int) (Math.random() * 3) + difficulty;
-      if (amountSpawn > 8) {
-        amountSpawn = 8;
+      if (amountSpawn > 4) {
+        amountSpawn = 4;
       }
       for (int i = 0; i < amountSpawn; i++) {
         int index = (int) (Math.random() * 8);

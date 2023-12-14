@@ -37,8 +37,8 @@ public class Enemy extends MovingThing {
         letters = new ArrayList<String>();
 
         int times = (int)(Math.random()*5) + difficulty;
-        if(times>10){
-            times=10;
+        if(times>5){
+            times=5;
         }
 
         for(int i=0;i<times;i++){
