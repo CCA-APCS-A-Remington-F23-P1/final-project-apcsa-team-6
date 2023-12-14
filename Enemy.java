@@ -59,10 +59,10 @@ public class Enemy extends MovingThing {
     }
 
     public boolean detectHit(){
-        if ((super.getX()<=350+100 && super.getY()<=350+100 && super.getX()>=350 && super.getY()>=350)
-        || (super.getX()+super.getWidth()>=350 && super.getY()>=350+100 && super.getX()+super.getWidth()<=350+100 && super.getY()<=350+100)
-        || (super.getX()+super.getWidth()>=350 && super.getY()+super.getHeight()>=350 && super.getX()+super.getWidth()<=350+100 && super.getY()+super.getHeight()<=350+100)
-        || (super.getX()<=350+100 && super.getY()+super.getHeight()>=350 && super.getX()>=350 && super.getY()+super.getHeight()<=350+100)){
+        if ((super.getX()<=350+80 && super.getY()<=350+80 && super.getX()>=330 && super.getY()>=330)
+        || (super.getX()+super.getWidth()>=330 && super.getY()>=350+80 && super.getX()+super.getWidth()<=350+80 && super.getY()<=350+80)
+        || (super.getX()+super.getWidth()>=330 && super.getY()+super.getHeight()>=330 && super.getX()+super.getWidth()<=350+80 && super.getY()+super.getHeight()<=350+80)
+        || (super.getX()<=350+80 && super.getY()+super.getHeight()>=330 && super.getX()>=330 && super.getY()+super.getHeight()<=350+80)){
             return true;
         }
         return false;
