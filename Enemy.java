@@ -63,10 +63,10 @@ public class Enemy extends MovingThing {
     }
 
     public boolean detectHit(){
-        if ((super.getX()<=botRightX && super.getY()<=botRightY && super.getX()>=topRightX && super.getY()>=topLeftY)
+        if ((super.getX()<=botRightX && super.getY()<=botRightY && super.getX()>=topLeftX && super.getY()>=topLeftY)
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()>=botRightY && super.getX()+super.getWidth()<=botRightX && super.getY()<=botRightY)
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()+super.getHeight()>=topLeftY && super.getX()+super.getWidth()<=botRightX && super.getY()+super.getHeight()<=botRightY)
-        || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topRightY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
+        || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topLeftY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
             return true;
         }
         return false;
