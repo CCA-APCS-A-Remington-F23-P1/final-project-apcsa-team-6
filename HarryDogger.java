@@ -44,6 +44,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private int spawnBuffer = 1200;
 
   private boolean gameOver = false;
+  private boolean gameOvered = false;
 
   public HarryDogger() {
     harry = new Hero(350, 350, 100, 100, 0);
@@ -82,6 +83,13 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     if (harry.getHealth() == 0) {
       graphToBack.setColor(Color.BLACK);
       graphToBack.fillRect(0, 0, 800, 800);
+      
+      if(!gameOvered){
+        sound.setFile(3);
+        sound.setVolume(1f);
+        sound.play();
+        gameOvered = true;
+      }
 
       graphToBack.setColor(Color.red);
       graphToBack.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
