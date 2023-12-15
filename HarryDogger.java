@@ -60,6 +60,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     //bg music
     //sound.setFile(4); //doom
     sound.setFile(5); //superhero
+    sound.setVolume(0.7f);
     sound.loop();
   }
 
@@ -161,6 +162,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     harry.setHealth(harry.getHealth() - (enemies.detectHit()?1:0));
     if(pastHealth > harry.getHealth()){
       sound.setFile(0);
+      sound.setVolume(1f);
       sound.play();
     }
 
