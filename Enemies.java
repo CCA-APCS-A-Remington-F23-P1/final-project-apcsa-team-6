@@ -8,9 +8,11 @@ import javax.imageio.ImageIO;
 
 public class Enemies {
     private ArrayList<Enemy> enemies;
+    private Sound sound;
 
     public Enemies(){
         enemies = new ArrayList<Enemy>();
+        sound = new Sound();
     }
 
     public void add(Enemy en){
@@ -37,6 +39,9 @@ public class Enemies {
         for(int i=enemies.size()-1;i>=0;i--){
             Enemy en = enemies.get(i);
             if(en.displayLetters().equals("")){
+                sound.setFile(1);
+                sound.setVolume(1f);
+                sound.play();
                 enemies.remove(i);
                 deadArr.add(1);
             }
