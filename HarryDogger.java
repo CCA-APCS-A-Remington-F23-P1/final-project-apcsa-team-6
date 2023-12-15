@@ -21,6 +21,8 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private Hero harry;
   private BackGround bg;
 
+  private Sound sound;
+
   // private Enemy enemy1;
 
   private Enemies enemies;
@@ -42,17 +44,25 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private int spawnBuffer = 1200;
 
   private boolean gameOver = false;
+  private boolean gameOvered = false;
 
   public HarryDogger() {
     harry = new Hero(350, 350, 100, 100, 0);
     bg = new BackGround(0, 0, 800, 800, 0);
     enemies = new Enemies();
     score = 0;
+    sound = new Sound();
 
     this.addKeyListener(this);
     new Thread(this).start();
 
     setVisible(true);
+
+    //bg music
+    sound.setFile(4); //doom
+    //sound.setFile(5); //superhero
+    sound.setVolume(0.45f);
+    sound.loop();
   }
 
   public void update(Graphics window) {
@@ -73,6 +83,13 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     if (harry.getHealth() == 0) {
       graphToBack.setColor(Color.BLACK);
       graphToBack.fillRect(0, 0, 800, 800);
+      
+      if(!gameOvered){
+        sound.setFile(3);
+        sound.setVolume(1f);
+        sound.play();
+        gameOvered = true;
+      }
 
       graphToBack.setColor(Color.red);
       graphToBack.setFont(new Font(Font.MONOSPACED, Font.BOLD, 50));
@@ -148,8 +165,14 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
 
     ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
     for (int i : deadArr) score += 100;
-
+    
+    int pastHealth = harry.getHealth();
     harry.setHealth(harry.getHealth() - (enemies.detectHit()?1:0));
+    if(pastHealth > harry.getHealth()){
+      sound.setFile(0);
+      sound.setVolume(1f);
+      sound.play();
+    }
 
     if (difficultyBuffer == 6000) {
       difficulty++;
@@ -166,6 +189,9 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   public void keyPressed(KeyEvent e) {
     keyPressedString = "" + e.getKeyChar();
     repaint();
+    sound.setFile(2);
+    sound.setVolume(0.7f);
+    sound.play();
   }
 
   public void keyReleased(KeyEvent e) {

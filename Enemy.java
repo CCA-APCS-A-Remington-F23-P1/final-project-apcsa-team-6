@@ -10,8 +10,8 @@ public class Enemy extends MovingThing {
     private ArrayList<String> letters;
     private int xSpeed, ySpeed;
     private Image image;
-    private int topLeftX = 370;
-    private int topLeftY = 370;
+    private int topLeftX = 350;
+    private int topLeftY = 350;
     private int botRightX = 350+80;
     private int botRightY = 350+80;
 
@@ -67,6 +67,7 @@ public class Enemy extends MovingThing {
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()>=botRightY && super.getX()+super.getWidth()<=botRightX && super.getY()<=botRightY)
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()+super.getHeight()>=topLeftY && super.getX()+super.getWidth()<=botRightX && super.getY()+super.getHeight()<=botRightY)
         || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topLeftY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
+            // sound.setFile();
             return true;
         }
         return false;
