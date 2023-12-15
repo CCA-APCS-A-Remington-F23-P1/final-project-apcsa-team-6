@@ -18,7 +18,7 @@ public class Sound{
         soundURL[3] = getClass().getResource("/sound/GameOver.wav");
         soundURL[4] = getClass().getResource("/sound/doom.wav");
         soundURL[5] = getClass().getResource("/sound/superhero.wav");
-        soundURL[6] = getClass().getResource("/sound/scream2.wav");
+        soundURL[6] = getClass().getResource("/sound/ascream.wav");
     }
 
     public void setFile(int i){
