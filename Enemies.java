@@ -39,7 +39,9 @@ public class Enemies {
         for(int i=enemies.size()-1;i>=0;i--){
             Enemy en = enemies.get(i);
             if(en.displayLetters().equals("")){
-                sound.setFile((int)(Math.random() * 2));
+                int num = Math.random() * 2;
+                if(num == 0) sound.setFile(1);
+                else sound.setFile(6);
                 sound.setVolume(1f);
                 sound.play();
                 enemies.remove(i);
