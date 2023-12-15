@@ -67,7 +67,7 @@ public class Enemy extends MovingThing {
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()>=botRightY && super.getX()+super.getWidth()<=botRightX && super.getY()<=botRightY)
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()+super.getHeight()>=topLeftY && super.getX()+super.getWidth()<=botRightX && super.getY()+super.getHeight()<=botRightY)
         || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topLeftY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
-            sound.setFile()
+            // sound.setFile();
             return true;
         }
         return false;

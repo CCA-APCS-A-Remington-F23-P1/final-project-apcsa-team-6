@@ -56,6 +56,11 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     new Thread(this).start();
 
     setVisible(true);
+
+    //bg music
+    //sound.setFile(4); //doom
+    sound.setFile(5); //superhero
+    sound.loop();
   }
 
   public void update(Graphics window) {
@@ -64,11 +69,6 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
 
   public void paint(Graphics window) {
     Graphics2D twoDGraph = (Graphics2D) window;
-
-    //bg music
-    sound.setFile(4); //doom
-    //sound.setFile(5); //superhero
-    sound.loop();
 
     // take a snap shop of the current screen and same it as an image
     // that is the exact same width and height as the current screen
@@ -159,7 +159,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     
     int pastHealth = harry.getHealth();
     harry.setHealth(harry.getHealth() - (enemies.detectHit()?1:0));
-    if(pastHealth > harry.getHeath()){
+    if(pastHealth > harry.getHealth()){
       sound.setFile(0);
       sound.play();
     }
