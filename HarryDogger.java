@@ -13,6 +13,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private BufferedImage back;
@@ -28,6 +33,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private Enemies enemies;
 
   private int score;
+  private int highScore;
 
   // top left, top middle, top right
   // middle left, middle right
@@ -47,11 +53,13 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private boolean gameOvered = false;
 
   public HarryDogger() {
+
     harry = new Hero(350, 350, 100, 100, 0);
     bg = new BackGround(0, 0, 800, 800, 0);
     enemies = new Enemies();
     score = 0;
     sound = new Sound();
+    highScore = 0;
 
     this.addKeyListener(this);
     new Thread(this).start();
@@ -65,12 +73,28 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     sound.loop();
   }
 
+  public int getHighScore() {
+    try {
+      File file = new File("Scores.txt");
+      Scanner scan = new Scanner(file);
+
+      while (scan.hasNextLine()){
+        highScore = scan.nextInt() > highScore ? scan.nextInt() : highScore;
+      }
+      scan.close();
+      return highScore;
+    } catch (FileNotFoundException e) {
+      return 0;
+    }
+  }
+
   public void update(Graphics window) {
     paint(window);
   }
 
   public void paint(Graphics window) {
     Graphics2D twoDGraph = (Graphics2D) window;
+    highScore = getHighScore();
 
     // take a snap shop of the current screen and same it as an image
     // that is the exact same width and height as the current screen
@@ -108,6 +132,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     graphToBack.setColor(Color.WHITE);
     graphToBack.drawString("Score: " + score, 150, 30);
     graphToBack.drawString("Difficulty: " + difficulty, 150, 60);
+    graphToBack.drawString("High score: " + highScore, 150, 90);
     graphToBack.drawString("Health: " + harry.getHealth(), 450, 30);
     graphToBack.setColor(Color.WHITE);
     if (!keyPressedString.equals("")) {
