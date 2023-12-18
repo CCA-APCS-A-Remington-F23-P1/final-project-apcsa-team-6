@@ -31,6 +31,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   // private Enemy enemy1;
 
   private Enemies enemies;
+  private FileWriter scoreWriter;
 
   private int score;
   private int highScore;
@@ -53,7 +54,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private boolean gameOvered = false;
 
   public HarryDogger() {
-
+    scoreWriter = new FileWriter("Scores.txt");
     harry = new Hero(350, 350, 100, 100, 0);
     bg = new BackGround(0, 0, 800, 800, 0);
     enemies = new Enemies();
@@ -112,6 +113,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
         sound.setFile(3);
         sound.setVolume(1f);
         sound.play();
+        scoreWriter.write(score);
         gameOvered = true;
       }
 
