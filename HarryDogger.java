@@ -193,13 +193,13 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     ArrayList<Integer> deadArr = enemies.damageEnemies(keyPressedString);
     for (int i : deadArr) score += 100;
     
-    int pastHealth = harry.getHealth();
-    harry.setHealth(harry.getHealth() - (enemies.detectHit()?1:0));
-    if(pastHealth > harry.getHealth()){
-      sound.setFile(0);
-      sound.setVolume(1f);
-      sound.play();
-    }
+    // int pastHealth = harry.getHealth();
+    // harry.setHealth(harry.getHealth() - (enemies.detectHit()?1:0));
+    // if(pastHealth > harry.getHealth()){
+    //   sound.setFile(0);
+    //   sound.setVolume(1f);
+    //   sound.play();
+    // }
 
     if (difficultyBuffer == 6000) {
       difficulty++;

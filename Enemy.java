@@ -14,6 +14,7 @@ public class Enemy extends MovingThing {
     private int topLeftY = 350;
     private int botRightX = 350+80;
     private int botRightY = 350+80;
+    private Sound sound;
 
     static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static final String lower = upper.toLowerCase();
@@ -23,6 +24,7 @@ public class Enemy extends MovingThing {
         super(x, y, w, h);
         xSpeed=xS;
         ySpeed=yS;
+        sound = new Sound();
         try
         {
         URL url = getClass().getResource("Cat_wizard.png");
@@ -67,7 +69,9 @@ public class Enemy extends MovingThing {
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()>=botRightY && super.getX()+super.getWidth()<=botRightX && super.getY()<=botRightY)
         || (super.getX()+super.getWidth()>=topLeftX && super.getY()+super.getHeight()>=topLeftY && super.getX()+super.getWidth()<=botRightX && super.getY()+super.getHeight()<=botRightY)
         || (super.getX()<=botRightX && super.getY()+super.getHeight()>=topLeftY && super.getX()>=topLeftX && super.getY()+super.getHeight()<=botRightY)){
-            // sound.setFile();
+            sound.setFile(0);
+            sound.setVolume(1f);
+            sound.play();
             return true;
         }
         return false;
