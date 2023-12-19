@@ -32,7 +32,12 @@ public class Hero extends MovingThing{
   }
 
   public void setHealth(int h){
-    health = h;
+    if(health==0){
+      // game over
+      health = 0;
+    }else{
+      health = h;
+    }
   }
 
   public void setSpeed(int s)

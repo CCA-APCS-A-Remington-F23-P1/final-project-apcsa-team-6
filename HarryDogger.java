@@ -54,13 +54,31 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   private boolean gameOvered = false;
 
   public HarryDogger() {
-    scoreWriter = new FileWriter("Scores.txt");
+    try {
+      scoreWriter = new FileWriter("Scores.txt", true);
+    } catch (IOException e) {
+      System.out.println("Error creating file");
+    }
+
+    try {
+      File file = new File("Scores.txt");
+      Scanner scan = new Scanner(file);
+
+      while (scan.hasNextInt()){
+        highScore = scan.nextInt();
+        System.out.println(highScore);
+      }
+      System.out.println(highScore);
+      scan.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("Error reading file");
+    }
+
     harry = new Hero(350, 350, 100, 100, 0);
     bg = new BackGround(0, 0, 800, 800, 0);
     enemies = new Enemies();
     score = 0;
     sound = new Sound();
-    highScore = 0;
 
     this.addKeyListener(this);
     new Thread(this).start();
@@ -74,20 +92,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
     sound.loop();
   }
 
-  public int getHighScore() {
-    try {
-      File file = new File("Scores.txt");
-      Scanner scan = new Scanner(file);
-
-      while (scan.hasNextLine()){
-        highScore = scan.nextInt() > highScore ? scan.nextInt() : highScore;
-      }
-      scan.close();
-      return highScore;
-    } catch (FileNotFoundException e) {
-      return 0;
-    }
-  }
+  
 
   public void update(Graphics window) {
     paint(window);
@@ -95,7 +100,6 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
 
   public void paint(Graphics window) {
     Graphics2D twoDGraph = (Graphics2D) window;
-    highScore = getHighScore();
 
     // take a snap shop of the current screen and same it as an image
     // that is the exact same width and height as the current screen
@@ -113,7 +117,12 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
         sound.setFile(3);
         sound.setVolume(1f);
         sound.play();
-        scoreWriter.write(score);
+        try {
+          if(score> highScore) scoreWriter.write("" + score + "\n");
+          scoreWriter.close();
+        } catch (IOException e) {
+          System.out.println("Error writing to file");
+        }
         gameOvered = true;
       }
 
