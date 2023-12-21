@@ -6,12 +6,11 @@ import java.awt.Image;
 import javax.imageio.ImageIO;
 
 public class Hero extends MovingThing{
-    private int speed;
-    private Image image;   
-    private int health;
+  private int speed;
+  private Image image;   
+  private int health;
 
-    public Hero(int x, int y, int w, int h, int s)
-  {
+  public Hero(int x, int y, int w, int h, int s){
     super(x, y, w, h);
     speed=s;
     health = 10;
@@ -40,23 +39,19 @@ public class Hero extends MovingThing{
     }
   }
 
-  public void setSpeed(int s)
-  {
+  public void setSpeed(int s){
     speed = s;
     //add more code
   }
 
-  public int getSpeed()
-  {
+  public int getSpeed(){
     return speed;
   }
 
   public void move(String direction){};
 
-  public void draw( Graphics window )
-  {
+  public void draw( Graphics window ){
     window.drawImage(image,getX(),getY(),getWidth(),getHeight(),null);
   }
-
 
 }
