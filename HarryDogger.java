@@ -219,9 +219,7 @@ public class HarryDogger extends Canvas implements KeyListener, Runnable {
   public void keyPressed(KeyEvent e) {
     keyPressedString = "" + e.getKeyChar();
     repaint();
-    sound.setFile(2);
-    sound.setVolume(0.7f);
-    sound.play();
+    harry.swordSwing();
   }
 
   public void keyReleased(KeyEvent e) {

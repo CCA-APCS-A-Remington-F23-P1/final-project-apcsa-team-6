@@ -5,15 +5,17 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.imageio.ImageIO;
 
-public class Hero extends MovingThing{
-  private int speed;
-  private Image image;   
-  private int health;
+public class Hero extends MovingThing implements Health{
+    private int speed;
+    private Image image;   
+    private Sound sound;
+    private int health;
 
   public Hero(int x, int y, int w, int h, int s){
     super(x, y, w, h);
     speed=s;
     health = 10;
+    sound = new Sound();
     try
     {
       URL url = getClass().getResource("Dog_knight.png");
@@ -33,6 +35,8 @@ public class Hero extends MovingThing{
   public void setHealth(int h){
     if(health==0){
       // game over
+      health = 0;
+    }else if (health<0){
       health = 0;
     }else{
       health = h;
@@ -54,4 +58,9 @@ public class Hero extends MovingThing{
     window.drawImage(image,getX(),getY(),getWidth(),getHeight(),null);
   }
 
+  public void swordSwing(){
+    sound.setFile(2);
+    sound.setVolume(0.7f);
+    sound.play();
+  }
 }
